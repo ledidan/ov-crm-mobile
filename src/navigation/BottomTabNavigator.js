@@ -1,37 +1,63 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-// import CustomerScreen from '../screens/CustomerScreen';
-// import TaskScreen from '../screens/TaskScreen';
+import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import CustomerScreenComponent from "../components/CustomerScreen";
+import ActivityScreen from "../screens/ActivityScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName;
+          let iconName = "home-outline"; // fallback
 
-          if (route.name === 'Home') iconName = 'home-outline';
-          else if (route.name === 'Customers') iconName = 'people-outline';
-          else if (route.name === 'Tasks') iconName = 'list-outline';
-          else if (route.name === 'Profile') iconName = 'person-outline';
-
-          return <Ionicons name={iconName} size={size} color={color} />;
+          switch (route.name) {
+            case "Trang chủ":
+              iconName = "home-outline";
+              break;
+            case "Khách hàng":
+              iconName = "people-outline";
+              break;
+            case "Công việc":
+              iconName = "briefcase-outline";
+              break;
+            case "Báo giá":
+              iconName = "bar-chart-outline";
+              break;
+            case "Thông báo":
+              iconName = "notifications-outline";
+              break;
+            case "Mở rộng":
+              iconName = "ellipsis-horizontal-circle-outline";
+              break;
+          }
+          return <Ionicons name={iconName} size={20} color={color} />;
         },
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: "#007AFF",
+        tabBarInactiveTintColor: "gray",
         headerShown: false,
+        tabBarLabelStyle: {
+          fontSize: 9,
+          fontFamily: "BeVietnamPro-SemiBold",
+        },
+        tabBarStyle: {
+          height: 80,
+          width: "100%",
+          paddingVertical: 6,
+        },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      {/* <Tab.Screen name="Customers" component={CustomerScreen} />
-      <Tab.Screen name="Tasks" component={TaskScreen} /> */}
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Trang chủ" component={HomeScreen} />
+      <Tab.Screen name="Khách hàng" component={CustomerScreenComponent} />
+      <Tab.Screen name="Công việc" component={ActivityScreen} />
+      <Tab.Screen name="Báo giá" component={ProfileScreen} />
+      <Tab.Screen name="Thông báo" component={ProfileScreen} />
+      <Tab.Screen name="Mở rộng" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
