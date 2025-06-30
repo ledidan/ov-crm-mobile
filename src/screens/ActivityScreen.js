@@ -9,11 +9,29 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AddTaskModal from "../components/ActivityScreen/AddTaskModal";
+import TaskListItem from "../components/ActivityScreen/TaskListItem";
 
 const tabs1 = ["Tất cả", "Của tôi"];
 const tabs2 = ["Hôm nay", "Quá hạn", "Sắp tới"];
 
-export default function ActivityScreen() {
+const tasks = [
+  {
+    id: 1,
+    title: "Demo",
+    startDate: "15/06/2025",
+    endDate: "15/06/2025",
+    progress: 0.8,
+  },
+  {
+    id: 2,
+    title: "Họp nội bộ",
+    startDate: "14/06/2025",
+    endDate: "18/06/2025",
+    progress: 0.6,
+  },
+];
+
+export default function ActivityScreen({ navigation }) {
   const [tab1, setTab1] = useState("Tất cả");
   const [tab2, setTab2] = useState("Hôm nay");
   const [modalVisible, setModalVisible] = useState(false);
@@ -65,20 +83,26 @@ export default function ActivityScreen() {
         ))}
       </View>
 
-      {/* Empty State */}
-      <View style={styles.emptyBox}>
-        <Image
-          source={require("../../assets/favicon.png")}
-          style={{ width: 100, height: 100, marginBottom: 16 }}
-          resizeMode="contain"
-        />
-        <Text style={styles.emptyText}>Bạn chưa có công việc nào</Text>
-        <Text style={styles.emptySubText}>
-          Bạn có thể bắt đầu tạo công việc đầu tiên để làm việc cùng Getfly
-        </Text>
-      </View>
+      {tasks.length > 0 ? (
+        <ScrollView style={{ flex: 1 }}>
+          {tasks.map((task) => (
+            <TaskListItem key={task.id} task={task} navigation={navigation}/>
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={styles.emptyBox}>
+          <Image
+            source={require("../../assets/favicon.png")}
+            style={{ width: 100, height: 100, marginBottom: 16 }}
+            resizeMode="contain"
+          />
+          <Text style={styles.emptyText}>Bạn chưa có công việc nào</Text>
+          <Text style={styles.emptySubText}>
+            Bạn có thể bắt đầu tạo công việc đầu tiên để làm việc cùng Autuna
+          </Text>
+        </View>
+      )}
 
-      {/* Floating Action Button */}
       <TouchableOpacity
         style={styles.fab}
         onPress={() => setModalVisible(true)}

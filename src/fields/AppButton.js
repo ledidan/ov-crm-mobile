@@ -10,8 +10,11 @@ export default function AppButton({
   size = "medium",
   variant = "contained",
   style,
-  color = theme.colors.primary,
+  color = "black",
+  iconColor = "black",
   iconName,
+  startIcon= false,
+  endIcon = false,
   iconSize = 24,
   disabled = false,
   ...props
@@ -32,11 +35,11 @@ export default function AppButton({
       ]}
       {...props}
     >
-      {iconName && (
+      {iconName && startIcon && (
         <Ionicons
           name={iconName}
           size={iconSize ? iconSize : iconSizes[size] || iconSize}
-          color={color || "black"}
+          color={iconColor || "black"}
           style={{marginRight: 6}}
         />
       )}
@@ -52,6 +55,13 @@ export default function AppButton({
           {title}
         </Text>
       )}
+      {iconName && endIcon && (
+        <Ionicons
+          name={iconName}
+          size={iconSize ? iconSize : iconSizes[size] || iconSize}
+          color={iconColor || "black"}
+        />
+      )}
     </TouchableOpacity>
   );
 }
@@ -60,7 +70,7 @@ const styles = StyleSheet.create({
   base: {
     borderRadius: 8,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "center",
   },
   textBase: {

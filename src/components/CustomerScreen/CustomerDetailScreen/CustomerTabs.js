@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { theme } from "../../../theme";
 import Activity from "./Tabs/Activity";
 import Detail from "./Tabs/Detail";
 import Order from "./Tabs/Order";
@@ -15,7 +14,7 @@ import Others from "./Tabs/Others";
 
 const TABS = ["Thông tin", "Hoạt động", "Đơn hàng", "Khác"];
 
-export default function CustomerTabs() {
+const CustomerTabs = ({navigation}) => {
   const [activeTab, setActiveTab] = useState("Thông tin");
 
   const handleTabPress = (tab) => {
@@ -28,7 +27,7 @@ export default function CustomerTabs() {
       case "Thông tin":
         return <Detail />;
       case "Đơn hàng":
-        return <Order />;
+        return <Order navigation={navigation}/>;
       case "Khác":
         return <Others />;
       default:
@@ -53,7 +52,9 @@ export default function CustomerTabs() {
       <View style={{ padding: 14 }}>{renderTabContent()}</View>
     </View>
   );
-}
+};
+
+export default CustomerTabs;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,8 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, Image, Pressable } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
+import { theme } from "../../theme";
 const customers = [
   {
     id: "1",
@@ -57,12 +64,13 @@ export default function CustomerList() {
       contentContainerStyle={{ padding: 16 }}
       renderItem={({ item }) => (
         <View style={styles.card}>
-          <Pressable
+          <TouchableOpacity
             style={styles.item}
             onPress={() =>
               navigation.navigate("CustomerDetail", { customer: item })
             }
           >
+            <View style={styles.verticalLine} />
             <Image
               source={require("../../../assets/favicon.png")}
               style={styles.avatar}
@@ -70,18 +78,19 @@ export default function CustomerList() {
             <View style={styles.info}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.line}>
-                <Feather name="phone" size={14} /> Số điện thoại: {item.phone}
+                <Feather name="phone" size={14} /> Số điện thoại: {" "}
+                <Text style={styles.itemInfo}>{item.phone}</Text>
               </Text>
               <Text style={styles.line}>
                 <Feather name="user" size={14} /> Người phụ trách:{" "}
-                {item.assignedTo}
+                <Text style={styles.itemInfo}>{item.assignedTo}</Text>
               </Text>
               <Text style={styles.line}>
                 <Feather name="calendar" size={14} /> Liên hệ lần cuối:{" "}
-                {item.lastContact}
+                <Text style={styles.itemInfo}>{item.lastContact}</Text>
               </Text>
             </View>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       )}
     />
@@ -89,16 +98,37 @@ export default function CustomerList() {
 }
 
 const styles = StyleSheet.create({
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  itemInfo: {
+    fontWeight: "600",
+  },
   card: {
+    width: "100%",
     flexDirection: "row",
     marginBottom: 16,
     backgroundColor: "#fff",
     borderRadius: 8,
     padding: 12,
     shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 1,
+    alignItems: "flex-start",
+    borderBottomColor: "#DFDFDF",
+    borderBottomWidth: 1,
+    borderLeftWidth: 4,
+    borderLeftColor: "transparent",
+    position: "relative",
+  },
+  verticalLine: {
+    width: 4,
+    height: "100%",
+    backgroundColor: theme.colors.secondary,
+    borderRadius: 2,
+    position: "absolute",
+    left: -20,
+    top: 0,
+    bottom: 0,
   },
   avatar: {
     width: 38,
@@ -109,6 +139,7 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
+    gap: 5
   },
   name: {
     fontSize: 16,
@@ -116,6 +147,8 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   line: {
+    flexDirection: "row",
+    alignItems: "center",
     fontSize: 14,
     marginBottom: 2,
     color: "#333",

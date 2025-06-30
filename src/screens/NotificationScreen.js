@@ -1,17 +1,10 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Thêm icon nếu mày dùng Expo
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 
-
-
-const QuotationScreen = ({ navigation }) => {
+const NotificationScreen = () => {
   const [selectedTab, setSelectedTab] = useState("Thông tin");
-  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
-
-  const toggleAddForm = () => {
-    setIsAddFormVisible(!isAddFormVisible);
-  };
   const TabInfo = () => <Text style={styles.tabContent}>📝 Thông tin</Text>;
   const TabCustomer = () => (
     <Text style={styles.tabContent}>👤 Khách hàng</Text>
@@ -19,15 +12,21 @@ const QuotationScreen = ({ navigation }) => {
   const TabSubTasks = () => (
     <Text style={styles.tabContent}>📋 Công việc con</Text>
   );
+  const TabTicket = () => <Text style={styles.tabContent}>🎫 Ticket</Text>;
+  const TabFile = () => <Text style={styles.tabContent}>📎 Tài liệu</Text>;
 
   const renderTabContent = () => {
     switch (selectedTab) {
-      case "Tất cả":
+      case "Thông tin":
         return <TabInfo />;
-      case "Chờ duyệt":
+      case "Khách hàng":
         return <TabCustomer />;
-      case "Đã xoá":
+      case "Công việc con":
         return <TabSubTasks />;
+      case "Ticket":
+        return <TabTicket />;
+      case "Tài liệu":
+        return <TabFile />;
       default:
         return null;
     }
@@ -35,13 +34,16 @@ const QuotationScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Báo giá</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("AddQuotationForm")} style={styles.addBtn}>
-          <Ionicons name="add" size={20} color="#000" />
+        <Text style={styles.title}>Thông báo</Text>
+        <TouchableOpacity
+          onPress={() => console.log("click")}
+          title="button click"
+        >
+          <Ionicons name="search-outline" size={20} />
         </TouchableOpacity>
       </View>
       <View style={styles.tabRow}>
-        {["Tất cả", "Chờ duyệt", "Đã xoá"].map(
+        {["Thông tin", "Khách hàng", "Công việc con", "Ticket", "Tài liệu"].map(
           (tab) => (
             <TouchableOpacity
               key={tab}
@@ -49,7 +51,7 @@ const QuotationScreen = ({ navigation }) => {
                 styles.tabBtn,
                 selectedTab === tab && styles.activeTabBtn,
               ]}
-              onPress={toggleAddForm}
+              onPress={() => setSelectedTab(tab)}
             >
               <Text
                 style={[
@@ -63,21 +65,16 @@ const QuotationScreen = ({ navigation }) => {
           )
         )}
       </View>
+      <View style={styles.infoBox}>{renderTabContent()}</View>
       <View style={styles.notification}>
-        {/* Tabs */}
-
-        {/* Info Section */}
-        <View style={styles.infoBox}>{renderTabContent()}</View>
-        <Text style={styles.message}>Chưa có báo giá</Text>
+        <Text style={styles.message}>Không có thông báo nào</Text>
         <Text style={styles.subMessage}>
-          Bạn chưa có báo giá nào cả. Hãy tạo báo giá cho khách hàng đi nhé!
+          Không có thông báo nào trong mục này của bạn cả
         </Text>
       </View>
     </View>
   );
 };
-
-export default QuotationScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -91,20 +88,17 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 10,
   },
+  infoBox: {
+    padding: 16,
+  },
   title: {
     fontSize: 18,
     fontWeight: "bold",
   },
-  tabRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingVertical: 10,
-  },
   tab: {
     fontSize: 14,
     color: theme.colors.primary,
+    paddingHorizontal: 10,
   },
   notification: {
     flex: 1,
@@ -126,7 +120,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     borderBottomWidth: 1,
-    borderTopWidth: 1,
     borderColor: "#eee",
   },
   tabBtn: {
@@ -152,9 +145,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#333",
   },
-  addBtn: {
-    backgroundColor: "#f1f1f1",
-    borderRadius: 4,
-    padding: 4
-  }
 });
+
+export default NotificationScreen;

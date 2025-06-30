@@ -6,14 +6,16 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import CustomerTabs from "../components/CustomerScreen/CustomerDetailScreen/CustomerTabs";
+import { AppButton } from "../fields";
+import { useNavigation } from "@react-navigation/native";
+import CustomerTabs from "@/components/CustomerScreen/CustomerDetailScreen/CustomerTabs";
 
 export default function CustomerDetailScreen({ route }) {
   const { customer } = route.params;
-
+  const navigation = useNavigation();
   return (
     <ScrollView style={styles.container}>
       {/* Top card */}
@@ -31,9 +33,16 @@ export default function CustomerDetailScreen({ route }) {
               color="#666"
               style={{ marginVertical: 10 }}
             />
-            <View style={styles.statusChip}>
-              <Text style={styles.statusText}>Mới</Text>
-            </View>
+            <AppButton
+              iconName={"chevron-down-outline"}
+              color="white"
+              variant="contained"
+              iconSize={15}
+              endIcon
+              title="Chốt"
+              size="small"
+              style={styles.button}
+            />
           </View>
         </View>
 
@@ -77,13 +86,13 @@ export default function CustomerDetailScreen({ route }) {
               <Ionicons name="people-outline" size={16} color="#555" />
               <Text style={styles.value}>Người tham gia</Text>
             </View>
-            <Pressable>
+            <TouchableOpacity onPress={() => console.log("xem chi tiet")}>
               <Text style={styles.link}>Xem chi tiết</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
-      <CustomerTabs />
+      <CustomerTabs navigation={navigation} />
       {/* <View style={styles.tabs}>
         <Text style={[styles.tab, styles.tabActive]}>Trao đổi</Text>
         <Text style={styles.tab}>Thông tin</Text>
@@ -116,7 +125,7 @@ export default function CustomerDetailScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: "#FFFFFF",
   },
   card: {
     backgroundColor: "#FFFFFF",
@@ -153,8 +162,8 @@ const styles = StyleSheet.create({
   },
   statusChip: {
     backgroundColor: "#007AFF",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 20,
+    paddingVertical: 6,
     borderRadius: 20,
   },
   statusText: {

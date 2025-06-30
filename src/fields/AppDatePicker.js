@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
+  TouchableOpacity,
   Platform,
   Modal,
 } from "react-native";
@@ -14,17 +14,15 @@ export default function AppDatePicker({ label, value, onChange }) {
   const [show, setShow] = useState(false);
   const [tempDate, setTempDate] = useState(value || new Date());
 
-  const handleChange = (event, selectedDate) => {
-    if (Platform.OS === "android") {
-      setShow(false);
-      if (selectedDate) {
-        onChange?.(selectedDate);
-      }
-    } else {
-      if (selectedDate) {
-        setTempDate(selectedDate);
-      }
+  const handleAndroidChange = (event, selectedDate) => {
+    setShow(false);
+    if (event.type === "set" && selectedDate) {
+      onChange?.(selectedDate);
     }
+  };
+
+  const handleIOSChange = (event, selectedDate) => {
+    if (selectedDate) setTempDate(selectedDate);
   };
 
   const confirmIOSDate = () => {
@@ -53,37 +51,36 @@ export default function AppDatePicker({ label, value, onChange }) {
       {show && Platform.OS === "android" && (
         <DateTimePicker
           value={value || new Date()}
-          mode="datetime"
+          mode="date"
           display="default"
-          locale="vi"
-          onChange={handleChange}
+          onChange={handleAndroidChange}
         />
       )}
-
-      {/* iOS Modal */}
       {Platform.OS === "ios" && (
         <Modal
           transparent
           visible={show}
           animationType="slide"
           onRequestClose={() => setShow(false)}
+          onDismiss={() => setShow(false)}
         >
           <View style={styles.modalOverlay}>
             <View style={styles.pickerContainer}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>Chọn thời gian</Text>
                 <TouchableOpacity onPress={() => setShow(false)}>
-                  <Ionicons name="close" size={20} />
+                  <Ionicons name="close" size={26} />
                 </TouchableOpacity>
               </View>
 
               <DateTimePicker
                 value={tempDate}
+                display="spinner"
                 mode="datetime"
-                display="spinner" // 🌀 Wheel style!
-                locale="vi"
-                onChange={handleChange}
+                onChange={handleIOSChange}
                 style={styles.picker}
+                themeVariant="light"
+                locale="vi-vn"
               />
 
               <TouchableOpacity
@@ -130,13 +127,15 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.3)",
   },
   pickerContainer: {
+    width: "100%",
     backgroundColor: "#fff",
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
     paddingHorizontal: 16,
-    paddingTop: 10,
+    paddingTop: 20,
     paddingBottom: 20,
   },
+  
   modalHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -147,9 +146,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "BeVietnamPro-Bold",
     color: "#333",
-  },
-  picker: {
-    backgroundColor: "#fff",
   },
   btnConfirm: {
     marginTop: 16,
@@ -164,4 +160,3 @@ const styles = StyleSheet.create({
     fontFamily: "BeVietnamPro-SemiBold",
   },
 });
-

@@ -6,6 +6,9 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CustomerScreenComponent from "../components/CustomerScreen";
 import ActivityScreen from "../screens/ActivityScreen";
+import NotificationScreen from "../screens/NotificationScreen";
+import QuotationScreen from "../screens/QuotationScreen";
+import ReportScreen from "../screens/ReportScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,51 +16,56 @@ export default function BottomTabNavigator({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color, focused }) => {
           let iconName = "home-outline"; // fallback
 
           switch (route.name) {
             case "Trang chủ":
-              iconName = "home-outline";
+              iconName = focused ? "home" : "home-outline";
               break;
             case "Khách hàng":
-              iconName = "people-outline";
+              iconName = focused ? "people" : "people-outline";
               break;
             case "Công việc":
-              iconName = "briefcase-outline";
+              iconName = focused ? "briefcase" : "briefcase-outline";
               break;
             case "Báo giá":
-              iconName = "bar-chart-outline";
+              iconName = focused ? "bar-chart" : "bar-chart-outline";
               break;
             case "Thông báo":
-              iconName = "notifications-outline";
+              iconName = focused ? "notifications" : "notifications-outline";
               break;
             case "Mở rộng":
-              iconName = "ellipsis-horizontal-circle-outline";
+              iconName = focused
+                ? "ellipsis-horizontal-circle"
+                : "ellipsis-horizontal-circle-outline";
               break;
           }
-          return <Ionicons name={iconName} size={20} color={color} />;
+          return <Ionicons name={iconName} size={22} color={color} />;
         },
         tabBarActiveTintColor: "#007AFF",
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarLabelStyle: {
-          fontSize: 9,
+          fontSize: 10,
           fontFamily: "BeVietnamPro-SemiBold",
         },
         tabBarStyle: {
-          height: 80,
+          borderTopWidth: 1,
+          borderTopColor: "#efefef",
+          height: 100,
           width: "100%",
-          paddingVertical: 6,
+          paddingTop: 5,
+          paddingBottom: 5,
         },
       })}
     >
       <Tab.Screen name="Trang chủ" component={HomeScreen} />
       <Tab.Screen name="Khách hàng" component={CustomerScreenComponent} />
       <Tab.Screen name="Công việc" component={ActivityScreen} />
-      <Tab.Screen name="Báo giá" component={ProfileScreen} />
-      <Tab.Screen name="Thông báo" component={ProfileScreen} />
-      <Tab.Screen name="Mở rộng" component={ProfileScreen} />
+      <Tab.Screen name="Báo giá" component={QuotationScreen} />
+      <Tab.Screen name="Thông báo" component={NotificationScreen} />
+      <Tab.Screen name="Mở rộng" component={ReportScreen} />
     </Tab.Navigator>
   );
 }

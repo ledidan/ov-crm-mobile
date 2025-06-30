@@ -31,9 +31,6 @@ export default function AppInput({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   label: {
     fontFamily: "BeVietnamPro-Regular",
     fontSize: 14,
