@@ -16,17 +16,19 @@ import ChatScreen from "@/screens/ChatScreen";
 import ContactSyncScreen from "@/screens/ContactAsyncScreen";
 import ContactAssignScreen from "@/screens/ContactAssignScreen";
 import SyncResultScreen from "@/screens/SyncResultScreen";
+import AccountScreen from "@/screens/AccountScreen";
+import ManagerInfoScreen from "@/screens/ManagerInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Trang chủ">
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
-      /> */}
+      />
       <Stack.Screen
         name="Trang chủ"
         component={BottomTabNavigator}
@@ -77,6 +79,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Đơn hàng"
         component={OrderScreen}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="Tài Khoản"
+        component={AccountScreen}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="Thông tin Admin"
+        component={ManagerInfoScreen}
         options={{ headerShown: true }}
       />
       <Stack.Screen

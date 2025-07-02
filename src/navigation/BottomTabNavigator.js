@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 import CustomerScreenComponent from "../components/CustomerScreen";
 import ActivityScreen from "../screens/ActivityScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import QuotationScreen from "../screens/QuotationScreen";
 import ReportScreen from "../screens/ReportScreen";
+import ExtendScreen from "@/screens/ExtendScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +65,7 @@ export default function BottomTabNavigator({ navigation }) {
       <Tab.Screen name="Công việc" component={ActivityScreen} />
       <Tab.Screen name="Báo giá" component={QuotationScreen} />
       <Tab.Screen name="Thông báo" component={NotificationScreen} />
-      <Tab.Screen name="Mở rộng" component={ReportScreen} />
+      <Tab.Screen name="Mở rộng" component={ExtendScreen} />
     </Tab.Navigator>
   );
 }
