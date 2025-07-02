@@ -10,17 +10,19 @@ import QuotationScreen from "../screens/QuotationScreen";
 import AddQuotationForm from "../components/Quotation/AddQuotationForm";
 import OrderScreenComponent from "@/components/OrderScreen";
 import OrderDetailScreen from "@/screens/OrderDetailScreen";
+import AccountScreen from "@/screens/AccountScreen";
+import ManagerInfoScreen from "@/screens/ManagerInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Trang chủ">
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
-      /> */}
+      />
       <Stack.Screen
         name="Trang chủ"
         component={BottomTabNavigator}
@@ -67,11 +69,20 @@ export default function StackNavigator() {
         options={{ headerShown: true }}
       />
       <Stack.Screen
+        name="Tài Khoản"
+        component={AccountScreen}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="Thông tin Admin"
+        component={ManagerInfoScreen}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
         name="OrderDetailScreen"
         component={OrderDetailScreen}
-        options={{ title: "Chi tiết đơn hàng", headerShown:  true }}
+        options={{ title: "Chi tiết đơn hàng", headerShown: true }}
       />
-      
     </Stack.Navigator>
   );
 }
