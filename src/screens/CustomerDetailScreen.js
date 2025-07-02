@@ -39,6 +39,7 @@ export default function CustomerDetailScreen({ route }) {
               variant="contained"
               iconSize={15}
               endIcon
+              iconColor="white"
               title="Chốt"
               size="small"
               style={styles.button}

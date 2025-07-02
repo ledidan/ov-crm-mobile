@@ -10,6 +10,12 @@ import QuotationScreen from "../screens/QuotationScreen";
 import AddQuotationForm from "../components/Quotation/AddQuotationForm";
 import OrderScreenComponent from "@/components/OrderScreen";
 import OrderDetailScreen from "@/screens/OrderDetailScreen";
+import OrderScreen from "@/screens/OrderScreen";
+import CreateSalesOrderScreen from "@/screens/CreateSalesOrderScreen";
+import ChatScreen from "@/screens/ChatScreen";
+import ContactSyncScreen from "@/screens/ContactAsyncScreen";
+import ContactAssignScreen from "@/screens/ContactAssignScreen";
+import SyncResultScreen from "@/screens/SyncResultScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +45,13 @@ export default function StackNavigator() {
         options={{ title: "Chi tiết khách hàng" }}
       />
       <Stack.Screen
+        name="SyncResultCustomer"
+        component={SyncResultScreen}
+        options={{ headerShadow: false, title: "Kết quả đồng bộ" }}
+      />
+
+      {/* Activity */}
+      <Stack.Screen
         name="ActivityDetail"
         component={ActivityDetailScreen}
         options={{ headerShown: false }}
@@ -63,15 +76,36 @@ export default function StackNavigator() {
       {/* Order */}
       <Stack.Screen
         name="Đơn hàng"
-        component={OrderScreenComponent}
+        component={OrderScreen}
         options={{ headerShown: true }}
       />
       <Stack.Screen
         name="OrderDetailScreen"
         component={OrderDetailScreen}
-        options={{ title: "Chi tiết đơn hàng", headerShown:  true }}
+        options={{ title: "Chi tiết đơn hàng", headerShown: true }}
       />
-      
+      <Stack.Screen
+        name="Tạo đơn hàng"
+        component={CreateSalesOrderScreen}
+        options={{ headerShown: true }}
+      />
+      {/* Chat  */}
+      <Stack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{ headerShown: true }}
+      />
+       {/* Contacts */}
+       <Stack.Screen
+        name="ContactAsync"
+        component={ContactSyncScreen}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name="ContactAssign"
+        component={ContactAssignScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,21 +1,26 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const HeaderSection = () => (
-  <View style={styles.header}>
-    <View style={styles.left}>
-      <Image
-        source={require("../../../assets/favicon.png")}
-        style={styles.avatar}
-      />
-      <Text style={styles.name}>Đan Lê</Text>
+const HeaderSection = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.header}>
+      <View style={styles.left}>
+        <Image
+          source={require("../../../assets/favicon.png")}
+          style={styles.avatar}
+        />
+        <Text style={styles.name}>Đan Lê</Text>
+      </View>
+      <Pressable onPress={() => navigation.navigate("Chat")}>
+        <Ionicons name="chatbubble-ellipses" size={26} color="#000" />
+      </Pressable>
     </View>
-    <Pressable onPress={() => console.log("Chat pressed")}>
-      <Ionicons name="chatbubble-ellipses" size={26} color="#000" />
-    </Pressable>
-  </View>
-);
+  );
+};
 
 export default HeaderSection;
 

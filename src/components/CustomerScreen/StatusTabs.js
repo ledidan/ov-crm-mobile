@@ -7,15 +7,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AppButton, IconButton } from "../../fields";
+import VerticalDivider from "@/fields/VerticalDivider";
 
 const statuses = [
-  { label: "Tất cả", color: "#007AFF", emoji: "🧐", count: 2 },
-  { label: "Tất cả", color: "#007AFF", emoji: "🧐", count: 2 },
-  { label: "Tất cả", color: "#007AFF", emoji: "🧐", count: 2 },
-  { label: "Tất cả", color: "#007AFF", emoji: "🧐", count: 2 },
-  { label: "Tất cả", color: "#007AFF", emoji: "🧐", count: 2 },
+  { label: "Tất cả", color: "", emoji: "🧐", count: 2 },
+  { label: "Mới", color: "#525f7e", emoji: "🧐", count: 2 },
+  { label: "Nóng", color: "#eb1600", emoji: "🧐", count: 2 },
+  { label: "Tiềm năng", color: "#007AFF", emoji: "🧐", count: 2 },
+  { label: "Mất", color: "#1a1a1a", emoji: "🧐", count: 2 },
+  { label: "Chốt", color: "#28a745", emoji: "🧐", count: 2 },
 ];
-const StatusTabs = () => {
+const StatusTabs = ({ setSelectMode }) => {
+
+
+  const toggleSelectMode = () => {
+    setSelectMode((prev) => !prev)
+  }
   return (
     <View>
       <ScrollView
@@ -25,40 +32,33 @@ const StatusTabs = () => {
       >
         <AppButton
           iconName={"filter-outline"}
-          color="black"
+          iconColor="blue"
           variant="outlined"
           iconSize={18}
           title="Bộ lọc"
           size="small"
+          startIcon={true}
           style={styles.button}
         />
         <AppButton
+          iconName={"checkbox-outline"}
+          color="blue"
+          startIcon={true}
+          iconSize={18}
+          iconColor="blue"
           variant="outlined"
           title="Chọn"
           size="small"
           style={styles.button}
+          onPress={toggleSelectMode}
         />
         <AppButton
           variant="outlined"
+          iconName={"people-outline"}
+          iconColor="blue"
+          iconSize={18}
+          startIcon={true}
           title="Nhóm khách hàng"
-          size="small"
-          style={styles.button}
-        />
-        <AppButton
-          variant="outlined"
-          title="Khác"
-          size="small"
-          style={styles.button}
-        />
-        <AppButton
-          variant="outlined"
-          title="Khác"
-          size="small"
-          style={styles.button}
-        />
-        <AppButton
-          variant="outlined"
-          title="Khác"
           size="small"
           style={styles.button}
         />
@@ -71,6 +71,7 @@ const StatusTabs = () => {
           size={20}
           style={styles.iconButton}
         />
+        <VerticalDivider />
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -78,7 +79,9 @@ const StatusTabs = () => {
         >
           {statuses.map((item, index) => (
             <TouchableOpacity key={index} style={styles.tagButton}>
-              <View style={[styles.dot, { backgroundColor: item.color }]} />
+              {item.color && (
+                <View style={[styles.dot, { backgroundColor: item.color }]} />
+              )}
               <Text style={styles.tagText}>
                 {item.label}
                 {item.count !== undefined ? ` (${item.count})` : ""}
@@ -92,7 +95,9 @@ const StatusTabs = () => {
             variant="text"
             iconSize={14}
             size="small"
-            iconName={"add-outline"}
+            iconName={"add"}
+            startIcon={true}
+            iconColor="blue"
           />
         </ScrollView>
       </View>

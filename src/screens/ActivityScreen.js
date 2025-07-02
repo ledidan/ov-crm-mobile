@@ -36,6 +36,22 @@ export default function ActivityScreen({ navigation }) {
   const [tab2, setTab2] = useState("Hôm nay");
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Simulate today’s date
+  const today = "15/06/2025";
+
+  const badgeCounts = {
+    "Hôm nay": tasks.filter((t) => t.startDate === today).length,
+    "Quá hạn": tasks.filter((t) => t.endDate < today).length,
+    "Sắp tới": tasks.filter((t) => t.startDate > today).length,
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (tab2 === "Hôm nay") return task.startDate === today;
+    if (tab2 === "Quá hạn") return task.endDate < today;
+    if (tab2 === "Sắp tới") return task.startDate > today;
+    return true;
+  });
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -66,7 +82,7 @@ export default function ActivityScreen({ navigation }) {
         ))}
       </View>
 
-      {/* Date Tabs */}
+      {/* Date Tabs with badge */}
       <View style={styles.dateRow}>
         {tabs2.map((t) => (
           <TouchableOpacity
@@ -74,25 +90,37 @@ export default function ActivityScreen({ navigation }) {
             onPress={() => setTab2(t)}
             style={styles.dateTab}
           >
-            <Text
-              style={[styles.dateText, tab2 === t && styles.dateTextActive]}
-            >
-              {t}
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text
+                style={[styles.dateText, tab2 === t && styles.dateTextActive]}
+              >
+                {t}
+              </Text>
+              {badgeCounts[t] > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{badgeCounts[t]}</Text>
+                </View>
+              )}
+            </View>
           </TouchableOpacity>
         ))}
       </View>
 
-      {tasks.length > 0 ? (
+      {/* Task List */}
+      {filteredTasks.length > 0 ? (
         <ScrollView style={{ flex: 1 }}>
-          {tasks.map((task) => (
-            <TaskListItem key={task.id} task={task} navigation={navigation}/>
+          {filteredTasks.map((task) => (
+            <TaskListItem
+              key={task.id}
+              task={task}
+              navigation={navigation}
+            />
           ))}
         </ScrollView>
       ) : (
         <View style={styles.emptyBox}>
           <Image
-            source={require("../../assets/favicon.png")}
+            source={require("assets/adaptive-icon.png")}
             style={{ width: 100, height: 100, marginBottom: 16 }}
             resizeMode="contain"
           />
@@ -103,6 +131,7 @@ export default function ActivityScreen({ navigation }) {
         </View>
       )}
 
+      {/* Add Button */}
       <TouchableOpacity
         style={styles.fab}
         onPress={() => setModalVisible(true)}
@@ -110,6 +139,7 @@ export default function ActivityScreen({ navigation }) {
         <Ionicons name="add" size={28} color="#fff" />
       </TouchableOpacity>
 
+      {/* Modal */}
       <AddTaskModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -117,6 +147,7 @@ export default function ActivityScreen({ navigation }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -194,6 +225,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     color: "#666",
+  },
+  badge: {
+    backgroundColor: "#FF3B30",
+    borderRadius: 8,
+    marginLeft: 6,
+    minWidth: 16,
+    height: 16,
+    paddingHorizontal: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: 11,
+    fontWeight: "600",
   },
   fab: {
     position: "absolute",

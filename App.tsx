@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import StackNavigator from "./src/navigation/StackNavigator";
 import { ActivityIndicator, View } from "react-native";
 import { useFonts } from "expo-font";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@/utils/toastConfig";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,6 +22,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <StackNavigator />
+      <Toast config={toastConfig}/>
     </NavigationContainer>
   );
 }

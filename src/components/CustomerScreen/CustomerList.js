@@ -10,6 +10,8 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../../theme";
+import Checkbox from "expo-checkbox";
+
 const customers = [
   {
     id: "1",
@@ -55,44 +57,74 @@ const customers = [
   },
 ];
 
-export default function CustomerList() {
+export default function CustomerList({
+  selectMode,
+  selectedCustomers,
+  setSelectedCustomers,
+}) {
   const navigation = useNavigation();
+
+  const toggleSelect = (id) => {
+    if (selectedCustomers.includes(id)) {
+      setSelectedCustomers(selectedCustomers.filter((item) => item !== id));
+    } else {
+      setSelectedCustomers([...selectedCustomers, id]);
+    }
+  };
+
   return (
     <FlatList
       data={customers}
       keyExtractor={(item) => item.id}
       contentContainerStyle={{ padding: 16 }}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() =>
-              navigation.navigate("CustomerDetail", { customer: item })
-            }
-          >
-            <View style={styles.verticalLine} />
-            <Image
-              source={require("../../../assets/favicon.png")}
-              style={styles.avatar}
-            />
-            <View style={styles.info}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.line}>
-                <Feather name="phone" size={14} /> Số điện thoại: {" "}
-                <Text style={styles.itemInfo}>{item.phone}</Text>
-              </Text>
-              <Text style={styles.line}>
-                <Feather name="user" size={14} /> Người phụ trách:{" "}
-                <Text style={styles.itemInfo}>{item.assignedTo}</Text>
-              </Text>
-              <Text style={styles.line}>
-                <Feather name="calendar" size={14} /> Liên hệ lần cuối:{" "}
-                <Text style={styles.itemInfo}>{item.lastContact}</Text>
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
+      renderItem={({ item }) => {
+        const isChecked = selectedCustomers.includes(item.id);
+
+        return (
+          <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.item}
+              activeOpacity={selectMode ? 1 : 0.7}
+              onPress={() => {
+                if (selectMode) {
+                  toggleSelect(item.id);
+                } else {
+                  navigation.navigate("CustomerDetail", { customer: item });
+                }
+              }}
+            >
+              {selectMode && (
+                <Checkbox
+                  value={isChecked}
+                  onValueChange={() => toggleSelect(item.id)}
+                  style={styles.checkbox}
+                  color={isChecked ? "#007AFF" : undefined}
+                />
+              )}
+              <View style={styles.verticalLine} />
+              <Image
+                source={require("../../../assets/favicon.png")}
+                style={styles.avatar}
+              />
+              <View style={styles.info}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.line}>
+                  <Feather name="phone" size={14} /> Số điện thoại:{" "}
+                  <Text style={styles.itemInfo}>{item.phone}</Text>
+                </Text>
+                <Text style={styles.line}>
+                  <Feather name="user" size={14} /> Người phụ trách:{" "}
+                  <Text style={styles.itemInfo}>{item.assignedTo}</Text>
+                </Text>
+                <Text style={styles.line}>
+                  <Feather name="calendar" size={14} /> Liên hệ lần cuối:{" "}
+                  <Text style={styles.itemInfo}>{item.lastContact}</Text>
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        );
+      }}
     />
   );
 }
@@ -101,6 +133,9 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  checkbox: {
+    marginRight: 8,
   },
   itemInfo: {
     fontWeight: "600",
@@ -139,7 +174,7 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
-    gap: 5
+    gap: 5,
   },
   name: {
     fontSize: 16,

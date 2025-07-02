@@ -5,37 +5,30 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../theme";
 import ProgressSlider from "../fields/ProgressSlider";
+import Info from "@/components/ActivityScreen/Tabs/Info";
+import Customer from "@/components/ActivityScreen/Tabs/Customer";
+import Ticket from "@/components/ActivityScreen/Tabs/Ticket";
+import Attachments from "@/components/ActivityScreen/Tabs/Attachments";
 
 const ActivityDetailScreen = ({ route, navigation }) => {
   const task = route.params?.task;
   const [taskProgress, setTaskProgress] = useState(task);
   const [selectedTab, setSelectedTab] = useState("Thông tin");
-  const TabInfo = () => <Text style={styles.tabContent}>📝 Thông tin</Text>;
-  const TabCustomer = () => (
-    <Text style={styles.tabContent}>👤 Khách hàng</Text>
-  );
-  const TabSubTasks = () => (
-    <Text style={styles.tabContent}>📋 Công việc con</Text>
-  );
-  const TabTicket = () => <Text style={styles.tabContent}>🎫 Ticket</Text>;
-  const TabFile = () => <Text style={styles.tabContent}>📎 Tài liệu</Text>;
-
   const renderTabContent = () => {
     switch (selectedTab) {
       case "Thông tin":
-        return <TabInfo />;
+        return <Info />;
       case "Khách hàng":
-        return <TabCustomer />;
-      case "Công việc con":
-        return <TabSubTasks />;
+        return <Customer />;
       case "Ticket":
-        return <TabTicket />;
+        return <Ticket />;
       case "Tài liệu":
-        return <TabFile />;
+        return <Attachments />;
       default:
         return null;
     }
@@ -95,27 +88,22 @@ const ActivityDetailScreen = ({ route, navigation }) => {
 
       {/* Tabs */}
       <View style={styles.tabRow}>
-        {["Thông tin", "Khách hàng", "Công việc con", "Ticket", "Tài liệu"].map(
-          (tab) => (
-            <TouchableOpacity
-              key={tab}
+        {["Thông tin", "Khách hàng", "Ticket", "Tài liệu"].map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            style={[styles.tabBtn, selectedTab === tab && styles.activeTabBtn]}
+            onPress={() => setSelectedTab(tab)}
+          >
+            <Text
               style={[
-                styles.tabBtn,
-                selectedTab === tab && styles.activeTabBtn,
+                styles.tabText,
+                selectedTab === tab && styles.activeTabText,
               ]}
-              onPress={() => setSelectedTab(tab)}
             >
-              <Text
-                style={[
-                  styles.tabText,
-                  selectedTab === tab && styles.activeTabText,
-                ]}
-              >
-                {tab}
-              </Text>
-            </TouchableOpacity>
-          )
-        )}
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
       {/* Info Section */}
       <View style={styles.infoBox}>{renderTabContent()}</View>
@@ -179,14 +167,15 @@ const styles = StyleSheet.create({
   },
   tabBtn: {
     paddingVertical: 12,
+    paddingHorizontal: 12,
   },
   tabText: {
-    fontSize: 13,
+    fontSize: 15,
     color: "#333",
   },
 
   infoBox: {
-    padding: 16,
+    // padding: 16,
   },
   activeTabBtn: {
     borderBottomWidth: 2,

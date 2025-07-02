@@ -1,13 +1,15 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { StyleSheet, View } from "react-native";
 import { theme } from "../theme";
 
-const TabIcon = ({ label, icon, color = theme.colors.primary }) => (
+const TabIcon = ({ label, icon, color = theme.colors.primary, onPress }) => (
   <View style={styles.tab}>
-    <Ionicons name={icon} size={20} color={color} />
-    <Text style={styles.tabText}>{label}</Text>
+    <TouchableOpacity onPress={onPress}>
+      <Ionicons name={icon} size={20} color={color} style={{textAlign: "center"}}/>
+      <Text style={styles.tabText}>{label}</Text>
+    </TouchableOpacity>
   </View>
 );
 

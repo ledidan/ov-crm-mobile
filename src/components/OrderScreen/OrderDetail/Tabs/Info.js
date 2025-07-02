@@ -126,39 +126,7 @@ const Info = () => {
         </View>
         <PaymentInfo />
       </ScrollView>
-      <View style={styles.footer}>
-        <View style={styles.totalBox}>
-          <View style={styles.boxLeft}>
-            <View style={styles.boxLeftInner}>
-              <Ionicons name="cart-outline" size={22} />
-              <View>
-                <Text style={styles.totalLabel}>Tổng giá trị đơn hàng</Text>
-                <Text style={styles.totalPrice}>{formatCurrency(3214124)}</Text>
-              </View>
-            </View>
-          </View>
-          <AppButton
-            iconName={"chevron-forward-outline"}
-            endIcon={true}
-            title="Thanh toán"
-            variant="contained"
-            onPress={() => {}}
-            size="small"
-            iconColor="white"
-            iconSize={16}
-          />
-        </View>
-
-        <View style={styles.actions}>
-          <TouchableOpacity style={styles.cancelBtn}>
-            <Text style={styles.cancelText}>✕ Hủy</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.exportBtn}>
-            <Ionicons name="document-text-outline" size={20} color={"white"}/>
-            <Text style={styles.exportText}>Xuất hoá đơn</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      
     </View>
   );
 };
@@ -217,27 +185,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000",
   },
-  totalPrice: {
-    fontWeight: "600",
-    fontSize: 15,
-    paddingVertical: 5,
-    color: "#000",
-  },
-  totalBox: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 12,
-  },
-  boxLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  boxLeftInner: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 20,
-  },
+ 
   sectionTitle: {
     fontWeight: "600",
     fontSize: 15,
@@ -272,56 +220,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#2196F3",
     textAlign: "right",
-  },
-  footer: {
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    backgroundColor: "#fff",
-    paddingBottom: 70,
-    paddingHorizontal: 14,
-    marginBottom: 20,
-  },
-  footerTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 12,
-  },
-  footerLabel: {
-    fontSize: 14,
-    color: "#777",
-  },
-  footerTotal: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  cancelBtn: {
-    flex: 1,
-    marginRight: 10,
-    backgroundColor: "#f44336",
-    padding: 12,
-    borderRadius: 8,
-  },
-  exportBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: "#00B276",
-    padding: 12,
-    borderRadius: 8,
-  },
-  cancelText: {
-    textAlign: "center",
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  exportText: {
-    textAlign: "center",
-    color: "#fff",
-    fontWeight: "bold",
   },
 });
