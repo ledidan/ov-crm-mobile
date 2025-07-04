@@ -9,31 +9,32 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { theme } from "@/theme";
 
 const { width } = Dimensions.get("window");
-const SLIDE_WIDTH = width - 40; 
+const SLIDE_WIDTH = width - 40;
 
 const supportChannels = [
   {
     id: "1",
-    title: "C3S Autuna",
+    title: "Mini Autuna",
     description:
       "Là một công cụ giúp kết nối trực tiếp giữa khách hàng/ đối tác với hệ thống Autuna",
-    image: require("../../../assets/favicon.png"),
+    image: require("../../../assets/illustrations/about-crm.jpg"),
   },
   {
     id: "2",
-    title: "Invoice Autuna",
+    title: "Cộng đồng Autuna",
     description:
       "Là một công cụ giúp xử lý hóa đơn, theo dõi và kết nối với hệ thống kế toán một cách mượt mà",
-    image: require("../../../assets/favicon.png"),
+    image: require("../../../assets/illustrations/community.jpg"),
   },
   {
     id: "3",
     title: "Help Center",
     description:
       "Kho tài liệu và video hướng dẫn chi tiết cách sử dụng hệ thống",
-    image: require("../../../assets/favicon.png"),
+    image: require("../../../assets/illustrations/learning.jpg"),
   },
 ];
 
@@ -49,7 +50,7 @@ const SupportSlider = () => {
 
   const renderItem = ({ item }) => (
     <View style={[styles.card, { width: SLIDE_WIDTH }]}>
-      <Image source={item.image} style={styles.image} resizeMode="cover" />
+      <Image source={item.image} style={styles.image} resizeMode="covert " />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
@@ -95,13 +96,13 @@ export default SupportSlider;
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   sectionTitle: {
     marginBottom: 8,
     fontSize: 18,
     fontWeight: "700",
-    marginHorizontal: 6
+    marginHorizontal: 6,
   },
   card: {
     backgroundColor: "#F5F8FF",
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   linkText: {
-    color: "#2F80ED",
+    color: theme.colors.primary,
     fontSize: 13,
     fontWeight: "600",
     marginRight: 4,

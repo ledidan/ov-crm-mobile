@@ -1,32 +1,43 @@
 {
   "expo": {
-    "name": "ov-crm-mobile",
-    "slug": "ov-crm-mobile",
+    "name": "Autuna CRM",
+    "slug": "autuna-crm-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/icons/appstore.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ledidan.autunacrmmobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/appstore.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.ledidan.autunacrmmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-splash-screen"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7c221c26-043d-4841-a999-4eccdd892f90"
+      }
+    }
   }
 }

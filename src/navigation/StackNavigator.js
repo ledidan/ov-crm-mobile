@@ -18,16 +18,61 @@ import ContactAssignScreen from "@/screens/ContactAssignScreen";
 import SyncResultScreen from "@/screens/SyncResultScreen";
 import AccountScreen from "@/screens/AccountScreen";
 import ManagerInfoScreen from "@/screens/ManagerInfoScreen";
+import CreateCustomerScreen from "@/screens/CreateCustomerScreen";
+import NewCustomerReportScreen from "@/screens/Report/NewCustomerReportScreen";
+import InteractionReportScreen from "@/screens/Report/InteractionReportScreen";
+import ActivityReportScreen from "@/screens/Report/ActivityReportScreen";
+import OrderReportScreen from "@/screens/Report/OrderReportScreen";
+import RevenueReportScreen from "@/screens/Report/RevenueReportScreen";
+import { theme } from "@/theme";
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Trang chủ">
+    <Stack.Navigator initialRouteName="Trang chủ"
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: theme.colors.primary,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+      },
+      headerTitleAlign: 'center',
+    }}
+    >
       <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
+      />
+      {/* ** Report  */}
+      <Stack.Screen
+        name="NewCustomerReport"
+        component={NewCustomerReportScreen}
+        options={{ title: "Báo cáo khách hàng mới", }}
+      />
+      <Stack.Screen
+        name="InteractionReport"
+        component={InteractionReportScreen}
+        options={{ title: "Báo cáo tương tác" }}
+      />
+      <Stack.Screen
+        name="ActivityReport"
+        component={ActivityReportScreen}
+        options={{ title: "Báo cáo hoạt động" }}
+      />
+      <Stack.Screen
+        name="OrderReport"
+        component={OrderReportScreen}
+        options={{ title: "Báo cáo đơn hàng" }}
+      />
+      <Stack.Screen
+        name="RevenueReport"
+        component={RevenueReportScreen}
+        options={{ title: "Báo cáo doanh thu" }}
       />
       <Stack.Screen
         name="Trang chủ"
@@ -35,7 +80,6 @@ export default function StackNavigator() {
         style={{}}
         options={{ headerShown: false }}
       />
-      {/* ** Customer  */}
       <Stack.Screen
         name="Khách hàng"
         component={BottomTabNavigator}
@@ -50,6 +94,11 @@ export default function StackNavigator() {
         name="SyncResultCustomer"
         component={SyncResultScreen}
         options={{ headerShadow: false, title: "Kết quả đồng bộ" }}
+      />
+      <Stack.Screen
+        name="CreateCustomer"
+        component={CreateCustomerScreen}
+        options={{ title: "Tạo khách hàng" }}
       />
 
       {/* Activity */}
@@ -107,13 +156,13 @@ export default function StackNavigator() {
         component={ChatScreen}
         options={{ headerShown: true }}
       />
-       {/* Contacts */}
-       <Stack.Screen
+      {/* Contacts */}
+      <Stack.Screen
         name="ContactAsync"
         component={ContactSyncScreen}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="ContactAssign"
         component={ContactAssignScreen}
         options={{ headerShown: false }}

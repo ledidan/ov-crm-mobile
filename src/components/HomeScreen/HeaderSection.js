@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  Pressable,
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,15 +20,15 @@ const HeaderSection = () => {
           onPress={() => navigation.navigate("Tài Khoản")}
         >
           <Image
-            source={require("../../../assets/favicon.png")}
+            source={require("../../../assets/avatars/user.png")}
             style={styles.avatar}
           />
           <Text style={styles.name}>Đan Lê</Text>
         </TouchableOpacity>
-        <Pressable onPress={() => navigation.navigate("Chat")}>
-          <Ionicons name="chatbubble-ellipses" size={26} color="#000" />
-        </Pressable>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
+        <Ionicons name="chatbubble-ellipses" size={26} color="#000" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
-    paddingTop: 50,
+    paddingTop: 60,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
     backgroundColor: "#FFFFFF",
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   name: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "600",
     color: "#000",
   },

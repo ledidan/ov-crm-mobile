@@ -71,7 +71,7 @@ const Header = () => {
         <ActionSheetModal
           visible={showModal}
           onClose={() => setShowModal(false)}
-          onCreateCustomer={() => console.log("Create customer")}
+          onCreateCustomer={() => navigation.navigate("CreateCustomer")}
           onSyncContact={onAsyncContact}
         />
       )}

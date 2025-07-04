@@ -1,26 +1,41 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../theme";
 
-const StatBox = ({ colors, title, subtitle, number, icon, iconName }) => {
+const StatBox = ({
+  colors,
+  title,
+  subtitle,
+  number,
+  icon,
+  iconName,
+  onPress,
+}) => {
   return (
     <LinearGradient colors={colors} style={styles.box}>
-      <View style={styles.content}>
-        <View style={styles.left}>
-          {icon ? (
-            <Image source={icon} style={styles.icon} resizeMode="contain" />
-          ) : (
-            <Ionicons name={iconName || "stats-chart"} size={24} color="#fff" style={styles.icon} />
-          )}
-          <View>
-            <Text style={theme.typography.button}>{title}</Text>
-            <Text style={styles.subtitle}>{subtitle}</Text>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.content}>
+          <View style={styles.left}>
+            {icon ? (
+              <Image source={icon} style={styles.icon} resizeMode="contain" />
+            ) : (
+              <Ionicons
+                name={iconName || "stats-chart"}
+                size={24}
+                color="#fff"
+                style={styles.icon}
+              />
+            )}
+            <View>
+              <Text style={theme.typography.button}>{title}</Text>
+              <Text style={styles.subtitle}>{subtitle}</Text>
+            </View>
           </View>
+          <Text style={styles.number}>{number}</Text>
         </View>
-        <Text style={styles.number}>{number}</Text>
-      </View>
+      </TouchableOpacity>
     </LinearGradient>
   );
 };
@@ -54,7 +69,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
     marginTop: 2,
-    fontWeight: 500
+    fontWeight: 500,
   },
   number: {
     fontSize: 64,

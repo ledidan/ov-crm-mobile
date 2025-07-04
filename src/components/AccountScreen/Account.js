@@ -21,8 +21,11 @@ const Account = () => {
     { icon: "login", label: "Thông tin đăng nhập" },
     { icon: "headset", label: "Hỗ trợ trực tuyến" },
     { icon: "file-document-outline", label: "Điều khoản sử dụng" },
+    { icon: "logout", label: "Đăng xuất", onPress: () => handleLogout() },
   ];
-
+  const handleLogout = () => {
+    console.log("log out ");
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -48,16 +51,26 @@ const Account = () => {
             key={idx}
             style={styles.menuItem}
             onPress={() => {
+              if (typeof item.onPress === "function") item.onPress();
               if (item.label === "Thông tin cá nhân") {
                 navigation.navigate(item.screen);
               }
             }}
           >
-            <View style={styles.menuLeft}>
-              <Icon name={item.icon} size={20} color="#000" />
-              <Text style={styles.menuText}>{item.label}</Text>
-            </View>
-            <Icon name="chevron-right" size={20} color="#999" />
+            {item.label === "Đăng xuất" ? (
+              <View style={styles.menuLeft}>
+                <Icon name={item.icon} size={20} color="red" />
+                <Text style={{ fontSize: 15, color: "red" }}>{item.label}</Text>
+              </View>
+            ) : (
+              <View style={styles.menuLeft}>
+                <Icon name={item.icon} size={20} color="#000" />
+                <Text style={styles.menuText}>{item.label}</Text>
+              </View>
+            )}
+            {item.label !== "Đăng xuất" && (
+              <Icon name="chevron-right" size={20} color="#999" />
+            )}
           </TouchableOpacity>
         ))}
       </View>

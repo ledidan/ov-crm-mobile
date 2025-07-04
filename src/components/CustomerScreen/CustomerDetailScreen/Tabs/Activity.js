@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-
   emptyBox: {
     flex: 1,
     alignItems: "center",

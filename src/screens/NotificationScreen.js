@@ -3,6 +3,36 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../theme";
 
+const mockNotifications = {
+  "Thông tin": [
+    { id: 1, title: "Đã cập nhật trạng thái cơ hội", time: "2 phút trước" },
+    { id: 2, title: "Giao nhiệm vụ mới cho bạn", time: "10 phút trước" },
+  ],
+  "Khách hàng": [
+    {
+      id: 3,
+      title: "Khách hàng Nguyễn Văn A vừa được tạo",
+      time: "1 giờ trước",
+    },
+    {
+      id: 4,
+      title: "Khách hàng Trần B vừa cập nhật email",
+      time: "3 giờ trước",
+    },
+  ],
+  "Công việc con": [
+    {
+      id: 5,
+      title: "Công việc con 'Check hợp đồng' sắp đến hạn",
+      time: "Hôm qua",
+    },
+  ],
+  Ticket: [
+    { id: 6, title: "Ticket #2345 vừa được phản hồi", time: "3 ngày trước" },
+    { id: 7, title: "Ticket #1234 đã được đóng", time: "4 ngày trước" },
+  ],
+  "Tài liệu": [],
+};
 const NotificationScreen = () => {
   const [selectedTab, setSelectedTab] = useState("Thông tin");
   const TabInfo = () => <Text style={styles.tabContent}>📝 Thông tin</Text>;
@@ -15,22 +45,54 @@ const NotificationScreen = () => {
   const TabTicket = () => <Text style={styles.tabContent}>🎫 Ticket</Text>;
   const TabFile = () => <Text style={styles.tabContent}>📎 Tài liệu</Text>;
 
+  // const renderTabContent = () => {
+  //   switch (selectedTab) {
+  //     case "Thông tin":
+  //       return <TabInfo />;
+  //     case "Khách hàng":
+  //       return <TabCustomer />;
+  //     case "Công việc con":
+  //       return <TabSubTasks />;
+  //     case "Ticket":
+  //       return <TabTicket />;
+  //     case "Tài liệu":
+  //       return <TabFile />;
+  //     default:
+  //       return null;
+  //   }
+  // };
   const renderTabContent = () => {
-    switch (selectedTab) {
-      case "Thông tin":
-        return <TabInfo />;
-      case "Khách hàng":
-        return <TabCustomer />;
-      case "Công việc con":
-        return <TabSubTasks />;
-      case "Ticket":
-        return <TabTicket />;
-      case "Tài liệu":
-        return <TabFile />;
-      default:
-        return null;
+    const items = mockNotifications[selectedTab] || [];
+    if (items.length === 0) {
+      return (
+        <View style={styles.notification}>
+          <Text style={styles.message}>Không có thông báo nào</Text>
+          <Text style={styles.subMessage}>
+            Không có thông báo nào trong mục này của bạn cả
+          </Text>
+        </View>
+      );
     }
+
+    return (
+      <View style={styles.infoBox}>
+        {items.map((item) => (
+          <View key={item.id} style={styles.notificationItem}>
+            <Ionicons
+              name="notifications-outline"
+              size={18}
+              color={theme.colors.primary}
+            />
+            <View style={{ marginLeft: 10 }}>
+              <Text style={styles.notificationTitle}>{item.title}</Text>
+              <Text style={styles.notificationTime}>{item.time}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    );
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -66,12 +128,6 @@ const NotificationScreen = () => {
         )}
       </View>
       <View style={styles.infoBox}>{renderTabContent()}</View>
-      <View style={styles.notification}>
-        <Text style={styles.message}>Không có thông báo nào</Text>
-        <Text style={styles.subMessage}>
-          Không có thông báo nào trong mục này của bạn cả
-        </Text>
-      </View>
     </View>
   );
 };
@@ -115,7 +171,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 20,
   },
-
   tabRow: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -131,7 +186,7 @@ const styles = StyleSheet.create({
   },
 
   infoBox: {
-    padding: 16,
+    // paddingVertical: 4,
   },
   activeTabBtn: {
     borderBottomWidth: 2,
@@ -144,6 +199,27 @@ const styles = StyleSheet.create({
   tabContent: {
     fontSize: 14,
     color: "#333",
+  },
+
+  // ** Notification
+  notificationItem: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    // marginBottom: 5,
+    borderBottomWidth: 1,
+    borderColor: "#eee",
+    padding: 20,
+    backgroundColor: "#f5f5f9"
+  },
+  notificationTitle: {
+    fontSize: 14,
+    color: "#333",
+    fontWeight: "500",
+  },
+  notificationTime: {
+    fontSize: 12,
+    color: "#999",
+    marginTop: 2,
   },
 });
 

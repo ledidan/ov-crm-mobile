@@ -17,12 +17,10 @@ const statuses = [
   { label: "Mất", color: "#1a1a1a", emoji: "🧐", count: 2 },
   { label: "Chốt", color: "#28a745", emoji: "🧐", count: 2 },
 ];
-const StatusTabs = ({ setSelectMode }) => {
-
-
+const StatusTabs = ({ setSelectMode, selectMode }) => {
   const toggleSelectMode = () => {
-    setSelectMode((prev) => !prev)
-  }
+    setSelectMode((prev) => !prev);
+  };
   return (
     <View>
       <ScrollView
@@ -39,14 +37,15 @@ const StatusTabs = ({ setSelectMode }) => {
           size="small"
           startIcon={true}
           style={styles.button}
+          disabled={selectMode}
         />
         <AppButton
           iconName={"checkbox-outline"}
           color="blue"
           startIcon={true}
           iconSize={18}
-          iconColor="blue"
-          variant="outlined"
+          iconColor={selectMode ? "white" : "blue"}
+          variant={selectMode ? "contained" : "outlined"}
           title="Chọn"
           size="small"
           style={styles.button}
@@ -60,6 +59,7 @@ const StatusTabs = ({ setSelectMode }) => {
           startIcon={true}
           title="Nhóm khách hàng"
           size="small"
+          disabled={selectMode}
           style={styles.button}
         />
       </ScrollView>
@@ -70,6 +70,7 @@ const StatusTabs = ({ setSelectMode }) => {
           onPress={() => console.log("List tags")}
           size={20}
           style={styles.iconButton}
+          disabled={selectMode}
         />
         <VerticalDivider />
         <ScrollView
@@ -78,7 +79,11 @@ const StatusTabs = ({ setSelectMode }) => {
           contentContainerStyle={styles.scrollContent}
         >
           {statuses.map((item, index) => (
-            <TouchableOpacity key={index} style={styles.tagButton}>
+            <TouchableOpacity
+              key={index}
+              style={[styles.tagButton, selectMode && styles.tagButtonActive]}
+              disabled={selectMode}
+            >
               {item.color && (
                 <View style={[styles.dot, { backgroundColor: item.color }]} />
               )}
@@ -98,6 +103,7 @@ const StatusTabs = ({ setSelectMode }) => {
             iconName={"add"}
             startIcon={true}
             iconColor="blue"
+            disabled={selectMode}
           />
         </ScrollView>
       </View>
@@ -153,6 +159,19 @@ const styles = StyleSheet.create({
   tagButton: {
     flexDirection: "row",
     alignItems: "center",
+    borderColor: "#dededc",
+    paddingVertical: 6,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    gap: 8,
+    marginLeft: 10,
+  },
+  tagButtonActive: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: 'gray',
+    opacity: 0.4,
     borderColor: "#dededc",
     paddingVertical: 6,
     borderWidth: 1,

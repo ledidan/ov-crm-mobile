@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import StatBox from "../../fields/StatBox";
 
-const StatSection = () => {
+const StatSection = ({ navigation }) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.row}>
@@ -11,6 +11,7 @@ const StatSection = () => {
           title="Khách hàng mới"
           subtitle="1 Khách hàng"
           number="1"
+          onPress={() => navigation.navigate("NewCustomerReport")}
         />
         <StatBox
           colors={["#f7971e", "#ffd200"]}
@@ -18,6 +19,7 @@ const StatSection = () => {
           subtitle="2 Khách hàng"
           number="2"
           icon={require("../../../assets/icons/trophy-100x100.png")}
+          onPress={() => navigation.navigate("InteractionReport")}
         />
       </View>
       <View style={styles.row}>
@@ -27,6 +29,7 @@ const StatSection = () => {
           subtitle="1 Hoạt động"
           number="3"
           icon={require("../../../assets/icons/trophy-100x100.png")}
+          onPress={() => navigation.navigate("ActivityReport")}
         />
         <StatBox
           colors={["#7F00FF", "#E100FF"]}
@@ -34,6 +37,7 @@ const StatSection = () => {
           subtitle="0 Đơn hàng"
           number="4"
           icon={require("../../../assets/icons/trophy-100x100.png")}
+          onPress={() => navigation.navigate("OrderReport")}
         />
       </View>
       <View style={styles.full}>
@@ -43,6 +47,7 @@ const StatSection = () => {
           subtitle="0 ₫"
           number="5"
           icon={require("../../../assets/icons/trophy-100x100.png")}
+          onPress={() => navigation.navigate("RevenueReport")}
         />
       </View>
     </View>

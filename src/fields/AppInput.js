@@ -32,24 +32,23 @@ export default function AppInput({
 
 const styles = StyleSheet.create({
   label: {
-    fontFamily: "BeVietnamPro-Regular",
+    fontFamily: "BeVietnamPro-SemiBold",
     fontSize: 14,
     color: "#333",
-    fontWeight:'bold',
-    marginBottom: 6,
+    paddingBottom: 5
   },
   required: {
     color: "red",
   },
   input: {
     maxHeight: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#f9f9f9',
     borderRadius: 4,
     height: 42,
     fontSize: 14,
     fontFamily: "BeVietnamPro-Regular",
     color: "#000",
     paddingHorizontal: 12, 
-    paddingVertical: 10,   
+    marginBottom: 20
   },
 });

@@ -49,7 +49,7 @@ const CustomerTabs = ({navigation}) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <View style={{ padding: 14 }}>{renderTabContent()}</View>
+      <View style={{ padding: 4 }}>{renderTabContent()}</View>
     </View>
   );
 };

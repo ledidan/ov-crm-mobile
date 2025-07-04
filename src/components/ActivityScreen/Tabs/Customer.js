@@ -37,7 +37,7 @@ const Customer = () => {
           >
             <View style={styles.card}>
               <Image
-                source={require("assets/adaptive-icon.png")}
+                source={require("assets/avatars/user.png")}
                 style={styles.avatar}
               />
               <View style={styles.info}>

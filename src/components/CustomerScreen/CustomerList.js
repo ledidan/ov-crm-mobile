@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,61 +8,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { theme } from "../../theme";
 import Checkbox from "expo-checkbox";
-
-const customers = [
-  {
-    id: "1",
-    name: "A Bin",
-    phone: "0385114940",
-    assignedTo: "Chưa cập nhật",
-    lastContact: 0,
-  },
-  {
-    id: "2",
-    name: "A Bin",
-    phone: "0385114940",
-    assignedTo: "Chưa cập nhật",
-    lastContact: 0,
-  },
-  {
-    id: "3",
-    name: "A Bin",
-    phone: "0385114940",
-    assignedTo: "Chưa cập nhật",
-    lastContact: 0,
-  },
-  {
-    id: "4",
-    name: "A Bin",
-    phone: "0385114940",
-    assignedTo: "Chưa cập nhật",
-    lastContact: 0,
-  },
-  {
-    id: "5",
-    name: "A Bin",
-    phone: "0385114940",
-    assignedTo: "Chưa cập nhật",
-    lastContact: 0,
-  },
-  {
-    id: "6",
-    name: "A Bin",
-    phone: "0385114940",
-    assignedTo: "Chưa cập nhật",
-    lastContact: 0,
-  },
-];
+import { theme } from "../../theme";
+import ActionModal from "@/fields/Modal/ActionModal";
 
 export default function CustomerList({
   selectMode,
   selectedCustomers,
   setSelectedCustomers,
+  customers,
+  navigation,
 }) {
-  const navigation = useNavigation();
+  const [actionModalVisible, setActionModalVisible] = useState(false);
 
   const toggleSelect = (id) => {
     if (selectedCustomers.includes(id)) {
@@ -72,26 +29,67 @@ export default function CustomerList({
     }
   };
 
-  return (
-    <FlatList
-      data={customers}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={{ padding: 16 }}
-      renderItem={({ item }) => {
-        const isChecked = selectedCustomers.includes(item.id);
+  const toggleSelectAll = () => {
+    if (selectedCustomers.length === customers.length) {
+      setSelectedCustomers([]);
+    } else {
+      setSelectedCustomers(customers.map((item) => item.id));
+    }
+  };
 
-        return (
-          <View style={styles.card}>
+  const renderHeader = () => {
+    if (!selectMode) return null;
+
+    return (
+      <View style={styles.selectAllRow}>
+        <View style={styles.selectedAll}>
+          <Checkbox
+            value={selectedCustomers.length === customers.length}
+            onValueChange={toggleSelectAll}
+            style={styles.checkbox}
+            color="#007AFF"
+          />
+          <Text style={styles.selectAllText}>Chọn tất cả</Text>
+        </View>
+
+        <View style={styles.selectedInfo}>
+          <Text style={styles.selectedText}>
+            Đã chọn "{selectedCustomers.length} Khách hàng"
+          </Text>
+          <TouchableOpacity onPress={() => setActionModalVisible(true)}>
+            <Text style={styles.actionText}>Chọn hành động &gt;</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <View>
+      <ActionModal
+        visible={actionModalVisible}
+        onClose={() => setActionModalVisible(false)}
+        onAction={(action) => {
+          setActionModalVisible(false);
+        }}
+      />
+      <FlatList
+        data={customers}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ padding: 16 }}
+        ListHeaderComponent={renderHeader}
+        renderItem={({ item }) => {
+          const isChecked = selectedCustomers.includes(item.id);
+
+          return (
             <TouchableOpacity
-              style={styles.item}
+              style={styles.card}
               activeOpacity={selectMode ? 1 : 0.7}
-              onPress={() => {
-                if (selectMode) {
-                  toggleSelect(item.id);
-                } else {
-                  navigation.navigate("CustomerDetail", { customer: item });
-                }
-              }}
+              onPress={() =>
+                selectMode
+                  ? toggleSelect(item.id)
+                  : navigation.navigate("CustomerDetail", { customer: item })
+              }
             >
               {selectMode && (
                 <Checkbox
@@ -101,9 +99,14 @@ export default function CustomerList({
                   color={isChecked ? "#007AFF" : undefined}
                 />
               )}
-              <View style={styles.verticalLine} />
+              <View
+                style={[
+                  styles.verticalLine,
+                  isChecked && styles.verticalLineActive,
+                ]}
+              />
               <Image
-                source={require("../../../assets/favicon.png")}
+                source={require("../../../assets/avatars/user.png")}
                 style={styles.avatar}
               />
               <View style={styles.info}>
@@ -122,48 +125,69 @@ export default function CustomerList({
                 </Text>
               </View>
             </TouchableOpacity>
-          </View>
-        );
-      }}
-    />
+          );
+        }}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  item: {
+  checkbox: {
+    marginRight: 10,
+  },
+  selectAllRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 12,
+    // flexWrap: "wrap",
   },
-  checkbox: {
+  selectedAll: {
+    flexDirection: 'row'
+  },
+  selectAllText: {
+    fontWeight: "600",
+  },
+  selectedInfo: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginLeft: 12,
+    // flexWrap: "wrap",
+  },
+  selectedText: {
+    fontWeight: "500",
     marginRight: 8,
   },
-  itemInfo: {
+  actionText: {
+    color: "#007AFF",
     fontWeight: "600",
   },
   card: {
-    width: "100%",
     flexDirection: "row",
-    marginBottom: 16,
     backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 12,
-    shadowColor: "#000",
-    alignItems: "flex-start",
-    borderBottomColor: "#DFDFDF",
+    borderBottomColor: "#eee",
     borderBottomWidth: 1,
+    padding: 12,
+    marginBottom: 10,
     borderLeftWidth: 4,
     borderLeftColor: "transparent",
     position: "relative",
+    borderRadius: 8,
   },
   verticalLine: {
+    borderRadius: 10,
     width: 4,
     height: "100%",
-    backgroundColor: theme.colors.secondary,
-    borderRadius: 2,
+    backgroundColor: theme.colors.success,
     position: "absolute",
-    left: -20,
-    top: 0,
-    bottom: 0,
+    left: -15,
+  },
+  verticalLineActive: {
+    backgroundColor: theme.colors.primary,
   },
   avatar: {
     width: 38,
@@ -174,18 +198,17 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
-    gap: 5,
   },
   name: {
     fontSize: 16,
     fontFamily: "BeVietnamPro-SemiBold",
-    marginBottom: 6,
   },
   line: {
-    flexDirection: "row",
-    alignItems: "center",
     fontSize: 14,
-    marginBottom: 2,
     color: "#333",
+    marginTop: 4,
+  },
+  itemInfo: {
+    fontWeight: "600",
   },
 });

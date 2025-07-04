@@ -8,7 +8,7 @@ import DocumentSection from "./DocumentSection";
 import SupportCard from "./SupportCard";
 
 
-const HomeScreenComponent = () => {
+const HomeScreenComponent = ({navigation}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
@@ -26,10 +26,10 @@ const HomeScreenComponent = () => {
         </Pressable>
 
         {/* <Collapsible collapsed={isCollapsed}> */}
-          <StatSection />
+          <StatSection navigation={navigation}/>
         {/* </Collapsible> */}
 
-        <DocumentSection />
+        {/* <DocumentSection /> */}
         <NewsList />
         <SupportCard />
       </ScrollView>
